@@ -41,10 +41,23 @@ def root():
         "status": "ok"
     }
 
-
 @app.get("/health")
 def health_check():
     return {
         "status": "healthy",
         "service": "astra-backend"
+    }
+
+@app.get("/locations/{location_name}")
+def get_location(location_name: str):
+    for location in LOCATIONS:
+        if location["name"].lower() == location_name.lower():
+            return {
+                "found": True,
+                "location": location
+            }
+        
+    return {
+        "found": False,
+        "message": f"Location '{location_name}' was not found"
     }
