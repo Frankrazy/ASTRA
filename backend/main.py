@@ -48,6 +48,13 @@ def health_check():
         "service": "astra-backend"
     }
 
+@app.get("/locations")
+def get_locations():
+    return {
+        "count": len(LOCATIONS),
+        "locations": LOCATIONS
+    }
+
 @app.get("/locations/{location_name}")
 def get_location(location_name: str):
     for location in LOCATIONS:
