@@ -15,6 +15,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+LOCATIONS = [
+    {
+        "id": 1,
+        "name": "Nairobi",
+        "country": "Kenya",
+        "latitude": -1.286389,
+        "longitude": 36.817223,
+        "description": "Kenya's capital city and a major urban monitoring region",
+    },
+    {
+        "id": 2,
+        "name": "Turkana",
+        "country": "Kenya",
+        "latitude": 3.312247,
+        "longitude": 35.565786,
+        "description": "A semi-arid region important for drought and vegetation monitoring",
+    }
+]
+
 @app.get("/")
 def root():
     return {
