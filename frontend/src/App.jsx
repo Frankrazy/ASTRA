@@ -1,5 +1,28 @@
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "./App.css";
+import { Circle } from "leaflet";
+
+const KENYA_CENTER = [-0.0236, 37.9062];
+
+const previewLocations = [
+  {
+    id: 1,
+    name: "Nairobi",
+    country: "Kenya",
+    latitude: -1.286389,
+    longitude: 36.817223,
+    description: "Kenya's capital city and a major urban monitoring region."
+  },
+
+ {
+   id: 2,
+   name: "Turkana",
+   country: "Kenya",
+   latitude: 3.312247,
+   longitude: 35.565786,
+   description: "A semi-arid region important for drought and vegetation monitoring"
+ }
+];
 
 function App() {
   return (
@@ -61,12 +84,40 @@ function App() {
       </aside>
 
       <section className="map-area">
-        <div className="map-placeholder">
-          <div>
-            <h2>Interactive Map</h2>
-            <p>Leaflet map will be added here on day 4.</p>
-          </div>
-        </div>
+       <div cassName="map-card">
+        <MapContainer
+          center={KENYA_CENTER}
+          zoom={6}
+          scrollWheelZoom={true}
+          className="leaflet-map"
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+
+          {previewLocations.map((location) => (
+            <CircleMarker
+              key={location.id}
+              center={[location.latitude, location.longitude]}
+              radius={10}
+              pathOptions={{
+                color: "#236b49",
+                fillColor: "#2fb36d",
+                fillOpacity: 0.85
+              }}
+            >
+              <Popup>
+                <strong>{location.name}</strong>
+                <br />
+                {location.country}
+                <br />
+                {location.description}
+              </Popup>
+            </CircleMarker>
+          ))}
+        </MapContainer>
+       </div> 
 
         <section classsName="Insight-bar">
           <div>
