@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import "./App.css";
 
 const KENYA_CENTER = [-0.0236, 37.9062];
@@ -46,7 +46,7 @@ function MapController({ selectedLocation }) {
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [searchMessage, setSearchMessage] = useState("");
 
 function handleSearch(event) {
@@ -67,7 +67,11 @@ function handleSearch(event) {
   if (!match) {
     setSelectedLocation(null);
     setSearchMessage("Location not found. Try Nairobi or Turkana.");
+    return;
   }
+
+  setSelectedLocation(match);
+  setSearchMessage("");
 }
 
   return (
@@ -110,7 +114,7 @@ function handleSearch(event) {
           <div className="region-card">
             {selectedLocation ? (
               <div className="region-details">
-                <strong>{selectedLocationName}</strong>
+                <strong>{selectedLocation.name}</strong>
                 <span>{selectedLocation.country}</span>
                 <p>{selectedLocation.latitude}</p>
                 <small>
@@ -118,7 +122,7 @@ function handleSearch(event) {
                 </small>
               </div>
             ) : (
-              <span ClassName="empty-state">No region Selected yet</span>
+              <span className="empty-state">No region selected yet</span>
             )}
           </div>
         </section>
