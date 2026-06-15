@@ -1,6 +1,5 @@
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "./App.css";
-import { Circle } from "leaflet";
 
 const KENYA_CENTER = [-0.0236, 37.9062];
 
@@ -84,7 +83,7 @@ function App() {
       </aside>
 
       <section className="map-area">
-       <div cassName="map-card">
+      <div className="map-card">
         <MapContainer
           center={KENYA_CENTER}
           zoom={6}
@@ -119,7 +118,7 @@ function App() {
         </MapContainer>
        </div> 
 
-        <section classsName="Insight-bar">
+        <section className="Insight-bar">
           <div>
             <span className="metric-label">Vegetation Health</span>
             <strong>Pending</strong>
