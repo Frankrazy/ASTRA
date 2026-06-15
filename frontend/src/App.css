@@ -268,3 +268,33 @@ font: inherit;
     border-bottom: 0;
   }
 }
+
+.search-message {
+  margin: 10px 0 0;
+  color: #607267;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.region-details {
+  width: 100%;
+  display: grid;
+  gap: 6px;
+}
+
+.region-details strong {
+  color: #17251d;
+  font-size: 18px;
+}
+
+.region-details p {
+  margin: 4px 0;
+  color: #4b5d54;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.region-details small {
+  color: #788a81;
+  line-height: 1.4;
+}

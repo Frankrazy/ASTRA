@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "./App.css";
 
@@ -23,7 +24,52 @@ const previewLocations = [
  }
 ];
 
+function MapController({ selectedLocation }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!selectedLocation) {
+      return;
+    }
+
+    map.flyTo(
+      [selectedLocation.latitude, selectedLocation.longitude],
+      9,
+      {
+        duration: 1.2
+      }
+    );
+  }, [map, selectedLocation]);
+
+  return null;
+}
+
 function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectLocation, setSelectedLocation] = useState(null);
+  const [searchMessage, setSearchMessage] = useState("");
+
+function handleSearch(event) {
+  event.preventDefault();
+
+  const cleanedSearch = searchTerm.trim().toLowerCase();
+
+  if (!cleanedSearch) {
+    setSelectedLocation(null);
+    setSearchMessage("Type a location name to begin.");
+    return;
+  }
+
+  const match = previewLocations.find(
+    (location) => location.name.toLowerCase() === cleanedSearch
+  );
+
+  if (!match) {
+    setSelectedLocation(null);
+    setSearchMessage("Location not found. Try Nairobi or Turkana.");
+  }
+}
+
   return (
    <main className="app-shell">
     <header className="topbar">
@@ -46,17 +92,34 @@ function App() {
             Search for a region to begin environmental monitoring.
           </p>
 
-          <div className="search-box">
-            <input type="text" placeholder="Search Nairobi or Turkana" />
-            <button type="button">Search</button>
-          </div>
+          <form className="search-box" onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search Nairobi or Turkana"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+          </form>
+
+          {searchMessage && <p className="search-message">{searchMessage}</p>}
         </section>
 
         <section className="panel">
           <h2>Selected Region</h2>
 
           <div className="region-card">
-            <span className="empty-state">No region selected yet</span>
+            {selectedLocation ? (
+              <div className="region-details">
+                <strong>{selectedLocationName}</strong>
+                <span>{selectedLocation.country}</span>
+                <p>{selectedLocation.latitude}</p>
+                <small>
+                  Lat: {selectedLocation.latitude} | Lng: {selectedLocation.longitude}
+                </small>
+              </div>
+            ) : (
+              <span ClassName="empty-state">No region Selected yet</span>
+            )}
           </div>
         </section>
 
@@ -95,17 +158,20 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
+          <MapController selectedLocation={selectedLocation} />
+
           {previewLocations.map((location) => (
             <CircleMarker
               key={location.id}
               center={[location.latitude, location.longitude]}
               radius={10}
               pathOptions={{
-                color: "#236b49",
-                fillColor: "#2fb36d",
-                fillOpacity: 0.85
+                color: selectedLocation?.id === location.id ? "#b7791f" : "#236b49",
+                fillColor: selectedLocation?.id === location.id ? "#f6ad55" : "2db36d",
+                fillOpactity: 0.9
               }}
             >
+              
               <Popup>
                 <strong>{location.name}</strong>
                 <br />
