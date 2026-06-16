@@ -3,26 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaf
 import "./App.css";
 
 const KENYA_CENTER = [-0.0236, 37.9062];
-
-const previewLocations = [
-  {
-    id: 1,
-    name: "Nairobi",
-    country: "Kenya",
-    latitude: -1.286389,
-    longitude: 36.817223,
-    description: "Kenya's capital city and a major urban monitoring region."
-  },
-
- {
-   id: 2,
-   name: "Turkana",
-   country: "Kenya",
-   latitude: 3.312247,
-   longitude: 35.565786,
-   description: "A semi-arid region important for drought and vegetation monitoring"
- }
-];
+const API_BASE_URL = "http://127.0.0.1:8000";
 
 function MapController({ selectedLocation }) {
   const map = useMap();
@@ -49,6 +30,34 @@ function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [searchMessage, setSearchMessage] = useState("");
 
+  const[locations, setLocations] = useState([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(true);
+  const [apiError, setApiError] = useState("");
+
+useEffect(() => {
+  async function fetchLocations() {
+    try {
+      const response = await fetch('${API_BASE_URL}/locations');
+
+      if (!response.ok) {
+        throw new Error("Failed to load locations.");
+      }
+
+      const data = await response.json();
+
+      setLocations(data.locations);
+      setApiError("");
+    } catch (error) {
+      setApiError("Backend connection failed. Make sure FastAPI is running.");
+      setLocations([]);
+    } finally {
+      setIsLoadingLocations(false);
+    }
+  }
+
+  fetchLocations();
+}, []);
+
 function handleSearch(event) {
   event.preventDefault();
 
@@ -60,13 +69,13 @@ function handleSearch(event) {
     return;
   }
 
-  const match = previewLocations.find(
+  const match = locations.find(
     (location) => location.name.toLowerCase() === cleanedSearch
   );
 
   if (!match) {
     setSelectedLocation(null);
-    setSearchMessage("Location not found. Try Nairobi or Turkana.");
+    setSearchMessage("Location not found. Try one of the available backend locations.");
     return;
   }
 
@@ -84,7 +93,7 @@ function handleSearch(event) {
 
       <div className="system-status">
         <span className="status-dot"></span>
-        <span>System Online</span>
+        <span>{apiError ? "Backend Offline" : "System Online"}</span>
       </div>
     </header>
 
@@ -105,7 +114,16 @@ function handleSearch(event) {
             />
           </form>
 
-          {searchMessage && <p className="search-message">{searchMessage}</p>}
+          {searchMessage && (
+            <p className="search-message">{searchMessage}</p>
+          )}
+
+          {isLoadingLocations && (
+            <p className="search-message">Loading locations from backend...</p>
+          )}
+
+          {apiError && <p className="error-message">{apiError}</p>}
+
         </section>
 
         <section className="panel">
@@ -164,7 +182,7 @@ function handleSearch(event) {
 
           <MapController selectedLocation={selectedLocation} />
 
-          {previewLocations.map((location) => (
+          {locations.map((location) => (
             <CircleMarker
               key={location.id}
               center={[location.latitude, location.longitude]}
