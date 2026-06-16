@@ -172,7 +172,16 @@ function handleSearch(event) {
         <section className="panel">
           <h2>Map Layer</h2>
 
-          <div className="layer-switcher">
+            <div className="layer-switcher">
+              
+            <button
+              type="button"
+              className={activeLayerId === "street" ? "layer-button active" : "later-button"}
+              onClick={() => setActiveLayerId("street")}
+            >
+              Street
+            </button>
+
             <button
               type="button"
               className={activeLayerId === "street" ? "layer-button active" : "later-button"}
