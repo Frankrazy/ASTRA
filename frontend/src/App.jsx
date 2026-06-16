@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaf
 import "./App.css";
 
 const KENYA_CENTER = [-0.0236, 37.9062];
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "http://127.0.0.1:8000/";
 
 function MapController({ selectedLocation }) {
   const map = useMap();
@@ -37,7 +37,7 @@ function App() {
 useEffect(() => {
   async function fetchLocations() {
     try {
-      const response = await fetch('${API_BASE_URL}/locations');
+      const response = await fetch(`${API_BASE_URL}locations`);
 
       if (!response.ok) {
         throw new Error("Failed to load locations.");
@@ -48,6 +48,7 @@ useEffect(() => {
       setLocations(data.locations);
       setApiError("");
     } catch (error) {
+      console.error(error);
       setApiError("Backend connection failed. Make sure FastAPI is running.");
       setLocations([]);
     } finally {
@@ -189,8 +190,8 @@ function handleSearch(event) {
               radius={10}
               pathOptions={{
                 color: selectedLocation?.id === location.id ? "#b7791f" : "#236b49",
-                fillColor: selectedLocation?.id === location.id ? "#f6ad55" : "2db36d",
-                fillOpactity: 0.9
+                fillColor: selectedLocation?.id === location.id ? "#f6ad55" : "#2db36d",
+                fillOpacity: 0.9
               }}
             >
               
