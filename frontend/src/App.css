@@ -305,3 +305,52 @@ font: inherit;
   font-size: 14px;
   line-height: 1.4;
 }
+
+.layer-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.layer-button {
+  height: 40px;
+  border: 1px solid #cbd8d1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #294236;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.layer-button:hover {
+  border-color: #236b49;
+}
+
+.layer-button.active {
+  background: #236b49;
+  border-color: #236b49;
+  color: #ffffff;
+}
+
+.layer-summary {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #dce6e0;
+  border-radius: 8px;
+  background: #ffffff;
+  display: grid;
+  gap: 4px;
+}
+
+.layer-summary span {
+  color: #607267;
+  font-size: 13px;
+}
+
+.layer-summary strong {
+  color: #17251d;
+}
+
+.layer-summary small {
+  color: #788a81;
+}

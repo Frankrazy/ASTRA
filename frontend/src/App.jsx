@@ -5,6 +5,26 @@ import "./App.css";
 const KENYA_CENTER = [-0.0236, 37.9062];
 const API_BASE_URL = "http://127.0.0.1:8000/";
 
+const MAP_LAYERS = {
+  street: {
+    id: "street",
+    name: "Street Map",
+    type: "Reference",
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  },
+  satellite: {
+    id: "satellite",
+    name: "Satellite Imagery",
+    type: "Earth Observetion",
+    attribution:
+      "Title &copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+    url:
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+  }
+};
+
 function MapController({ selectedLocation }) {
   const map = useMap();
 
@@ -33,6 +53,9 @@ function App() {
   const[locations, setLocations] = useState([]);
   const [isLoadingLocations, setIsLoadingLocations] = useState(true);
   const [apiError, setApiError] = useState("");
+
+  const [activeLayerId, setActiveLayerId] = useState("street");
+  const activeLayer = MAP_LAYERS[activeLayerId];
 
 useEffect(() => {
   async function fetchLocations() {
@@ -147,6 +170,26 @@ function handleSearch(event) {
         </section>
 
         <section className="panel">
+          <h2>Map Layer</h2>
+
+          <div className="layer-switcher">
+            <button
+              type="button"
+              className={activeLayerId === "street" ? "layer-button active" : "later-button"}
+              onClick={() => setActiveLayerId("satellite")}
+            >
+              Satellite
+            </button>
+          </div>
+
+          <div className="layer-summary">
+            <span>Active Layer</span>
+            <strong>{activeLayer.name}</strong>
+            <small>{activeLayer.type}</small>
+          </div>
+        </section>
+
+        <section className="panel">
           <h2>Analysis Modules</h2>
 
           <div className="module-list">
@@ -177,8 +220,9 @@ function handleSearch(event) {
           className="leaflet-map"
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            key={activeLayer.id}
+            attribution={activeLayer.attribution}
+            url={activeLayer.url}
           />
 
           <MapController selectedLocation={selectedLocation} />
@@ -220,7 +264,7 @@ function handleSearch(event) {
 
           <div>
             <span className="metric-label">Satellite Layer</span>
-            <strong>Not Connected</strong>
+            <strong>{activeLayer.name}</strong>
           </div>
         </section>
       </section>
