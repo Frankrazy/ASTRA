@@ -45,7 +45,44 @@ The Phase 1 system allows a user to:
 
 ## Repository Structure
 
-
+'''text
+ASTRA/
+├──backend
+|  ├──analytics/
+|  ├──api/
+|  ├──models/
+|  ├──main.py
+|  └──requirements.txt
+├──datasets/
+├──docs/
+├── frontend/
+|   ├──dashboard/
+|   ├──map/
+|   ├──public/
+|   |  ├──favicon.svg
+|   |  └──icons.svg
+|   ├──reports/
+|   ├──src/
+|   |  ├──assets/
+|   |  |  ├──hero.png
+|   |  |  ├──react.svg
+|   |  |  └──vite.svg
+|   |  ├──App.css
+|   |  ├──App.jsx
+|   |  ├──index.css
+|   |  └──main.jsx
+|   ├──.gitignore
+|   ├──eslint.config.js
+|   ├──index.html
+|   ├──package-lock.json
+|   ├──package.json
+|   ├──README.md
+|   └──vite.config.js
+├──research/
+├──tests/
+├──.gitattributes
+├──.gitignore
+└──README.md
 
 ## Backend Setup
 
