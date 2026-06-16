@@ -1,4 +1,4 @@
-#ASTRA
+# ASTRA
 
 ASTRA is an AI-powered Earth Observation plaform designd to hep users monitor vegetation health, predict drought risk, assess environmental threats, and generate actionable insights from satellite and climate data.
 
