@@ -9,9 +9,13 @@ ASTRA helps users select any location on Earth, view environmental data, and rec
 The long-term goal is to support:
 
 -Satellite imagery visualization
+
 -Vegetation health analysis
+
 -Drought prdeiction
+
 -Flood and disaster monitoring
+
 -AI-generated environment reports
 
 ## phase 1 Goal
@@ -21,10 +25,15 @@ Build the foundation of ASTRA.
 The Phase 1 system allows a user to:
 
 -Open the frontend app
+
 -Open the backend API
+
 -Search for Nairobi
+
 -Search for Turkana
+
 -View selected locations on an interactive map
+
 -Connect the React frontend to the FastAPI backend
 
 ## Tech Stack
