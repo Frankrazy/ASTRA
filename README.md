@@ -48,6 +48,8 @@ The Phase 1 system allows a user to:
 ```text
 ASTRA/
 ├── backend/
+|   ├──__pycache__/
+|   |   └──main.cpython-313.pyc
 │   ├── analytics/
 │   ├── api/
 │   ├── models/
