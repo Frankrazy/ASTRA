@@ -176,7 +176,7 @@ function handleSearch(event) {
               
             <button
               type="button"
-              className={activeLayerId === "street" ? "layer-button active" : "later-button"}
+              className={activeLayerId === "street" ? "layer-button active" : "layer-button"}
               onClick={() => setActiveLayerId("street")}
             >
               Street
@@ -184,7 +184,7 @@ function handleSearch(event) {
 
             <button
               type="button"
-              className={activeLayerId === "street" ? "layer-button active" : "later-button"}
+              className={activeLayerId === "satellite" ? "layer-button active" : "layer-button"}
               onClick={() => setActiveLayerId("satellite")}
             >
               Satellite
