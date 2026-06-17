@@ -354,3 +354,28 @@ font: inherit;
 .layer-summary small {
   color: #788a81;
 }
+
+.metadata-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.metadata-item {
+  padding: 10px 12px;
+  border: 1px solid #dce6e0;
+  border-radius: 8px;
+  background: #ffffff;
+  display: grid;
+  gap: 4px;
+}
+
+.metdata-item span {
+  color: #607267;
+  font-size: 12px;
+}
+
+.metadata-item strong {
+  color: #17251d;
+  font-size: 14px;
+  line-height: 1.4;
+}

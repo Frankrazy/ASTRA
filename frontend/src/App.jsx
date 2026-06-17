@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap, useMapEvents } from "react-leaflet";
 import "./App.css";
 
 const KENYA_CENTER = [-0.0236, 37.9062];
@@ -45,6 +45,35 @@ function MapController({ selectedLocation }) {
   return null;
 }
 
+function MapMetadataTracker ({ onMetadataChange }) {
+  const map = useMapEvents({
+    moveend() {
+      const center = map.getCenter();
+
+      onMetadataChange({
+        zoom: map.getZoom(),
+        center: {
+          latitude: center.lat,
+          longitude: center.lng,
+        }
+      });
+    },
+    zoomend() {
+      const center = map.getCenter();
+
+      onMetadataChange({
+        zoom: map.getZoom(),
+        center: {
+          latitude: center.lat,
+          longitude: center.lng,
+        }
+      });
+    }
+  });
+
+  return null;
+}
+
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -56,6 +85,14 @@ function App() {
 
   const [activeLayerId, setActiveLayerId] = useState("street");
   const activeLayer = MAP_LAYERS[activeLayerId];
+
+  const [mapMetadata, setMapMetadata] = useState({
+    zoom: 6,
+    center: {
+      latitude: KENYA_CENTER[0],
+      longitude: KENYA_CENTER[1]
+    }
+  });
 
 useEffect(() => {
   async function fetchLocations() {
@@ -199,6 +236,48 @@ function handleSearch(event) {
         </section>
 
         <section className="panel">
+          <h2>Satellite Metadata</h2>
+          <div className="metadata-grid">
+            <div className="metadata-item">
+              <span>Provider</span>
+              <strong>{activeLayer.id === "satellite" ? "Esri World Imagery" : "OpenStreetMap"}</strong>
+            </div>
+
+            <div className="metadata-item">
+              <span>Layer Type</span>
+              <strong>{activeLayer.type}</strong>
+            </div>
+
+            <div className="metadata-item">
+              <span>Map Zoom</span>
+              <strong>{mapMetadata.zoom}</strong>
+            </div>
+
+            <div className="metdata-item">
+              <span>Map Center</span>
+              <strong>
+                {mapMetadata.center.latitude.toFixed(3)},{""}
+                {mapMetadata.center.longitude.toFixed(3)}
+              </strong>
+            </div>
+
+            <div className="metadata-item">
+              <span>Selected Region</span>
+              <strong>
+               {selectedLocation
+                ? '${selectedLocation.latitude.toFixed(3)}, ${selectedLocation.longitude.toFixed(3)}'
+                : "None"}
+              </strong>
+            </div>
+
+            <div className="metadata-item">
+              <span>Imagery Status</span>
+              <strong>{activeLayer.id === "satellite" ? "connected" : "Reference Map"}</strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="panel">
           <h2>Analysis Modules</h2>
 
           <div className="module-list">
@@ -235,6 +314,7 @@ function handleSearch(event) {
           />
 
           <MapController selectedLocation={selectedLocation} />
+          <MapMetadataTracker onMetadataChange={setMapMetadata} />
 
           {locations.map((location) => (
             <CircleMarker
