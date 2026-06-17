@@ -265,11 +265,11 @@ function handleSearch(event) {
               <span>Selected Region</span>
               <strong>
                {selectedLocation
-                ? '${selectedLocation.latitude.toFixed(3)}, ${selectedLocation.longitude.toFixed(3)}'
+                ? `${selectedLocation.latitude.toFixed(3)}, ${selectedLocation.longitude.toFixed(3)}`
                 : "None"}
               </strong>
             </div>
-
+            
             <div className="metadata-item">
               <span>Imagery Status</span>
               <strong>{activeLayer.id === "satellite" ? "connected" : "Reference Map"}</strong>
