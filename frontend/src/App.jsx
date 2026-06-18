@@ -349,7 +349,7 @@ function handleSearch(event) {
       </aside>
 
       <section className="map-area">
-      <div className="map-card">
+      <div className={comparisonMode ? "map-card comparison-active" : "map-card"}>
         <MapContainer
           center={KENYA_CENTER}
           zoom={6}
@@ -387,7 +387,33 @@ function handleSearch(event) {
             </CircleMarker>
           ))}
         </MapContainer>
+
+        {comparisonMode && (
+          <div className="comparison-overlay">
+            <div className="comarison-label before-label">
+              <span>Before</span>
+              <strong>{beforeDate}</strong>
+            </div>
+
+            <div className="comprison-divider"></div>
+
+            <div className="comparison-label after-label">
+              <span>After</span>
+              <strong>{afterDate}</strong>
+            </div>
+          </div>
+        )}
        </div> 
+
+       {comparisonMode && (
+        <section className="comparison-status">
+         <strong>Before/After Comparison Active</strong>
+         <span>
+           Showing Visual comparison mode for {beforeDate} to {afterDate}.
+           Historical satellite retrieval will be connected in a later step.
+         </span>
+        </section>
+       )}
 
         <section className="Insight-bar">
           <div>
