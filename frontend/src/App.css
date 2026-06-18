@@ -205,7 +205,7 @@ font: inherit;
   border-top: 1px solid #d7e2dc;
   background: #ffffff;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .insight-bar div {
@@ -377,5 +377,67 @@ font: inherit;
 .metadata-item strong {
   color: #17251d;
   font-size: 14px;
+  line-height: 1.4;
+}
+
+.date-control {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.date-control label {
+  color: #607267;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.date-control input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #cbd8d1;
+  border-radius: 6px;
+  padding: 0 10px;
+  background: #ffffff;
+  color: #17251d;
+}
+
+.toggle-row {
+  margin: 6px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #294236;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.toggle-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: #236b49;
+}
+
+.timeline-summary {
+  padding: 12px;
+  border: 1px solid #dce6e0;
+  border-radius: 8px;
+  background: #ffffff;
+  display: grid;
+  gap: 4px;
+}
+
+.timeline-summary span {
+  color: #607267;
+  font-size: 13px;
+}
+
+.timeline-summary strong {
+  color: #17251d;
+  font-size: 14px;
+}
+
+.timeline-summary small {
+  color: #788a81;
   line-height: 1.4;
 }

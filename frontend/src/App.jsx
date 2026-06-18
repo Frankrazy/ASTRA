@@ -86,6 +86,10 @@ function App() {
   const [activeLayerId, setActiveLayerId] = useState("street");
   const activeLayer = MAP_LAYERS[activeLayerId];
 
+  const [beforeDate, setBeforeDate] = useState("2024-01-01");
+  const [afterDate, setAfterDate] = useState("2024-06-01");
+  const [comparisonMode, setComparisonMode] = useState(false);
+
   const [mapMetadata, setMapMetadata] = useState({
     zoom: 6,
     center: {
@@ -278,6 +282,51 @@ function handleSearch(event) {
         </section>
 
         <section className="panel">
+          <h2>Historical Imagery</h2>
+
+          <div className="date-control">
+            <label htmlFor="before-date">Before Date</label>
+            <input
+              id="before-date"
+              type="date"
+              value={beforeDate}
+              onChange={(event) => setBeforeDate(event.target.value)}
+            />
+          </div>
+
+          <div className="date-control">
+            <label htmlFor="after-date">After Date</label>
+            <input
+              id="after-date"
+              type="date"
+              value={afterDate}
+              onChange={(event) => setAfterDate(event.target.value)}
+            />
+          </div>
+
+          <label className="toggle-row">
+            <input
+              type="checkbox"
+              checked={comparisonMode}
+              onChange={(event) => setComparisonMode(event.target.checked)}
+            />
+            <span>Enable comparison mode</span>
+          </label>
+
+          <div className="timeline-summary">
+            <span>Timeline</span>
+            <strong>
+              {beforeDate} to {afterDate}
+            </strong>
+            <small>
+              {comparisonMode
+               ? "Comparison mode enabled"
+               : "Single map view enabled"}
+            </small>
+          </div>
+        </section>
+
+        <section className="panel">
           <h2>Analysis Modules</h2>
 
           <div className="module-list">
@@ -354,6 +403,11 @@ function handleSearch(event) {
           <div>
             <span className="metric-label">Satellite Layer</span>
             <strong>{activeLayer.name}</strong>
+          </div>
+
+          <div>
+            <span className="metric-label">Comparison</span>
+            <strong>{comparisonMode ? "Enabled" : "Off"}</strong>
           </div>
         </section>
       </section>
