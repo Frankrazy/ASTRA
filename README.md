@@ -95,25 +95,33 @@ ASTRA/
 cd backend
 ```
 
-2. Create a virtual environment:
+Create a virtual environment:
 
 ```bash
 python -m venv venv
 ```
 
-3. Activate the virtual environment:
+Activate the virtual environment:
+
+Powershell
 
 ```bash
 venv\Scripts\activate
 ```
 
-4. Install dependencies:
+Bash
+
+```bash
+source venv\bin\activate
+```
+
+1. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-5. Run the backend server:
+Run the backend server:
 
 ```bash
 uvicorn main:app --reload
@@ -141,19 +149,19 @@ http://127.0.0.1:8000/locations
 
 ## Frontend Setup
 
-1. Move into the frontend folder:
+Move into the frontend folder:
 
 ```bash
 cd frontend
 ```
 
-2. Install dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-3. Run the frontend:
+Run the frontend:
 
 ```bash
 npm run dev
